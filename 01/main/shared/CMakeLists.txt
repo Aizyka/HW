@@ -9,15 +9,7 @@ set_target_properties( hw_shared
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
-if (WIN32)
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH}"${CMAKE_BINARY_DIR}/bin/lib")
-find_library(DLL_NAME libhw.dll PATHS ${CMAKE_LIBRARY_PATH})
-target_link_libraries(hw_shared ${DLL_NAME})
-else()
 target_link_libraries(hw_shared hw)
-endif()
-
-
 
 include(CTest)
 
