@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 project(hw_shared)
 
 add_executable(hw_shared main.cpp)
+target_compile_features(hw_shared PUBLIC cxx_std_20)
 
 set_target_properties( hw_shared
     PROPERTIES

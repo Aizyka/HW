@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 project(hw_static)
 
 add_executable(hw_static main.cpp)
+target_compile_features(hw_static PUBLIC cxx_std_20)
 
 set_target_properties( hw_static
     PROPERTIES
