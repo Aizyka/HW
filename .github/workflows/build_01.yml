@@ -109,11 +109,13 @@ jobs:
 
       - name: Install Strip
         shell: bash
-        run: cmake --install . --strip
+        run: |
+          cd 01
+          cmake --install . --strip
 
       - name: Pack
         shell: bash
-        working-directory: instdir
+        working-directory: 01/instdir
         run: |
           ls -laR
           ${{ matrix.config.archiver }} ../${{ matrix.config.artifact }} .
