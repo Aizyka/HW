@@ -1,0 +1,71 @@
+#include <algorithm>
+#include <cstdlib>
+#include <iostream>
+#include <string_view>
+
+#include <chrono>
+#include <thread>
+
+static std::string_view get_user_name(char**);
+
+int main(int /*argc*/, char* /*argv*/[], char** env)
+{
+    using namespace std;
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    string_view user_name = get_user_name(env);
+
+    string_view output_phrase("hello,");
+
+    cout << output_phrase << " " << user_name << endl;
+
+    bool is_good = cout.good();
+
+    int result = is_good ? EXIT_SUCCESS : EXIT_FAILURE;
+    return result;
+}
+static char** get_env_end(char** env)
+{
+    while (*env)
+    {
+        ++env;
+    }
+
+    return env;
+}
+
+static bool start_with(std::string_view str, std::string_view start)
+{
+    return str.size() >= start.size() &&
+           std::equal(begin(start), end(start), begin(str));
+}
+
+static std::string_view get_value(std::string_view key_value)
+{
+    auto end_it = end(key_value);
+    auto it     = std::find(begin(key_value), end_it, '=');
+    if (it == end_it)
+    {
+        return "";
+    }
+    ++it; // skip '='
+    if (it == end_it)
+    {
+        return "";
+    }
+    return { &*it, static_cast<size_t>(end_it - it) };
+}
+
+static std::string_view get_user_name(char** env)
+{
+    using namespace std;
+
+    char** env_end = get_env_end(env);
+    auto   it      = find_if(env,
+                      env_end,
+                      [](const char* env_str)
+                      { return start_with(env_str, "USER="); });
+
+    return it != env_end ? get_value(*it) : "unknown";
+}

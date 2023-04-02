@@ -1,0 +1,3 @@
+add_subdirectory(static_lib)
+add_subdirectory(shared_lib)
+add_subdirectory(main)
