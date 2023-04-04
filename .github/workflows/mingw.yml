@@ -35,3 +35,19 @@ jobs:
         run: |
           cd 01
           cmake --build . --config Release
+      - name: Install Strip
+        shell: bash
+        run: |
+          cd 01
+          cmake --install . --strip
+      - name: Pack
+        shell: bash
+        working-directory: 01/instdir
+        run: |
+          ls -laR
+          7z a ../windows_mingw.7z .
+      - name: Upload
+        uses: actions/upload-artifact@v1
+        with:
+          path: ./01/windows_mingw.7z
+          name: windows_mingw.7z
