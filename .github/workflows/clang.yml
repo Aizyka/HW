@@ -69,7 +69,7 @@ jobs:
 
       - name: Pack
         shell: bash
-        working-directory: 01/
+        working-directory: 01/instdir
         run: |
           ls -laR
           ${{ matrix.config.archiver }} ../${{ matrix.config.artifact }} .
