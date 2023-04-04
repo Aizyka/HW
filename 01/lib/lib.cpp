@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main()
+int show_hello(char** env)
 {
     using namespace std;
     std::cout << "Hello, world!" << std::endl;
