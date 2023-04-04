@@ -24,7 +24,6 @@ jobs:
         run: |
           cd 01
           mkdir build
-          mkdir instdir
           cmake \
             -S . \
             -B . \
@@ -43,7 +42,7 @@ jobs:
           cmake --install . --strip
       - name: Pack
         shell: bash
-        working-directory: 01/instdir
+        working-directory: 01/build/bin
         run: |
           ls -laR
           7z a ../windows_msvc.7z .
