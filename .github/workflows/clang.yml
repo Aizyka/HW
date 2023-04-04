@@ -19,11 +19,9 @@ jobs:
         - {
             name: "MacOS Clang",
             os: macos-latest,
-            artifact: "macos_clang.7z",
             build_type: "Release",
             cc: "clang",
             cxx: "clang++",
-            archiver: "7za a",
             generators: "Ninja"
           }
 
@@ -60,32 +58,3 @@ jobs:
         run: |
           cd 01
           cmake --build . --config ${{ matrix.config.build_type }}
-
-      - name: Install Strip
-        shell: bash
-        run: |
-          cd 01
-          cmake --install . --strip
-
-      - name: Pack
-        shell: bash
-        working-directory: 01/
-        run: |
-          ls -laR
-          ${{ matrix.config.archiver }} ../${{ matrix.config.artifact }} .
-      - name: Upload
-        uses: actions/upload-artifact@v1
-        with:
-          path: ./01/${{ matrix.config.artifact }}
-          name: ${{ matrix.config.artifact }}
-
-      - name: Upload release asset
-        if: github.event_name == 'release' && (github.event.action == 'published' || github.event.action == 'created')
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./${{ matrix.config.artifact }}
-          asset_name: ${{ matrix.config.artifact }}.zip
-          asset_content_type: application/zip
