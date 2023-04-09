@@ -1,4 +1,4 @@
-name: Ubuntu GCC Build
+name: Build
 
 on:
   push:
