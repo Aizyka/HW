@@ -23,14 +23,11 @@ jobs:
         shell: bash
         run: |
           cd 01
-          mkdir build
-          mkdir instdir
           cmake \
             -S . \
             -B . \
             -DCMAKE_BUILD_TYPE=Release \
-            -G "Visual Studio 17 2022" \
-            -DCMAKE_INSTALL_PREFIX:PATH=instdir
+            -G "Visual Studio 17 2022"
       - name: Build
         shell: bash
         run: |
@@ -43,7 +40,7 @@ jobs:
           cmake --install . --strip
       - name: Pack
         shell: bash
-        working-directory: 01/instdir
+        working-directory: 01/bin
         run: |
           ls -laR
           7z a ../windows_msvc.7z .
