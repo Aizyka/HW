@@ -46,9 +46,10 @@ jobs:
         shell: bash
         run: |
           cd 02
+          mkdir build
           cmake \
             -S . \
-            -B . \
+            -B build \
             -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} \
             -G "${{ matrix.config.generators }}"
 
@@ -66,7 +67,7 @@ jobs:
 
       - name: Pack
         shell: bash
-        working-directory: 02/bin
+        working-directory: 02/build/bin
         run: |
           ls -laR
           ${{ matrix.config.archiver }} ../${{ matrix.config.artifact }} .

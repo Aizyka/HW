@@ -26,9 +26,10 @@ jobs:
         shell: bash
         run: |
           cd 02
+          mkdir build
           cmake \
             -S . \
-            -B . \
+            -B build \
             -DCMAKE_BUILD_TYPE=Release \
             -G Ninja
       - name: Build
@@ -43,7 +44,7 @@ jobs:
           cmake --install . --strip
       - name: Pack
         shell: bash
-        working-directory: 02/bin
+        working-directory: 02/build/bin
         run: |
           ls -laR
           7z a ../windows_mingw.7z .
