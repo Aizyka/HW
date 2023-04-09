@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 project(main_static)
 
-if(MINGW)
-set_source_files_properties(main.cpp PROPERTIES COMPILE_FLAGS "-O0")
-endif()
-
 add_executable(main_static main.cpp)
 
 set_target_properties( main_static
