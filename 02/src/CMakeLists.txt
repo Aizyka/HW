@@ -1,0 +1,2 @@
+add_subdirectory(main_shared)
+add_subdirectory(main_static)

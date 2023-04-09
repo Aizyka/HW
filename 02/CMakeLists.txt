@@ -1,2 +1,2 @@
-add_subdirectory(lib)
-add_subdirectory(main)
+add_subdirectory(libs)
+add_subdirectory(src)
