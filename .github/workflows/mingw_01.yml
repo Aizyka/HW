@@ -1,4 +1,4 @@
-name: Build
+name: MinGW 01
 
 on:
   push:

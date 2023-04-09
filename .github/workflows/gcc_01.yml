@@ -1,4 +1,4 @@
-name: Build
+name: GCC 01
 
 on:
   push:
