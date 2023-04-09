@@ -24,8 +24,8 @@ jobs:
           git submodule update
       - name: Configure
         shell: bash
-        working-directory: 02
         run: |
+          cd 02
           mkdir build
           cmake \
             -S . \
