@@ -21,7 +21,7 @@ jobs:
       - name: Init Submodule
         run: |
           git submodule init
-	  git submodule update
+          git submodule update
       - name: Configure
         shell: bash
         run: |
