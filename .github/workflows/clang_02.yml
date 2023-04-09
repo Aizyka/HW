@@ -50,8 +50,8 @@ jobs:
           
       - name: Configure
         shell: bash
+        working-directory: 02
         run: |
-          cd 02
           mkdir build
           cmake \
             -S . \
@@ -60,14 +60,14 @@ jobs:
             -G "${{ matrix.config.generators }}"
       - name: Build
         shell: bash
+        working-directory: 02/build
         run: |
-          cd 02
           cmake --build . --config ${{ matrix.config.build_type }}
 
       - name: Install Strip
         shell: bash
+        working-directory: 02/build
         run: |
-          cd 02
           cmake --install . --strip
 
       - name: Pack
