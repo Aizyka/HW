@@ -47,14 +47,11 @@ jobs:
         shell: bash
         run: |
           cd 01
-          mkdir build
-          mkdir instdir
           cmake \
             -S . \
             -B . \
             -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} \
-            -G "${{ matrix.config.generators }}" \
-            -DCMAKE_INSTALL_PREFIX:PATH=instdir
+            -G "${{ matrix.config.generators }}"
       - name: Build
         shell: bash
         run: |
@@ -69,7 +66,7 @@ jobs:
 
       - name: Pack
         shell: bash
-        working-directory: 01/instdir
+        working-directory: 01/bin
         run: |
           ls -laR
           ${{ matrix.config.archiver }} ../${{ matrix.config.artifact }} .
