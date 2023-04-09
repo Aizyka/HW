@@ -19,6 +19,10 @@ jobs:
           ninja --version
           cmake --version
           # cmd "${{ matrix.config.environment_script }}"
+      - name: Init Submodule
+        run: |
+          git submodule init
+	  git submodule update
       - name: Configure
         shell: bash
         run: |
