@@ -52,5 +52,5 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
-          path: ./02/windows_msvc.7z
+          path: ./02/build/windows_msvc.7z
           name: windows_msvc.7z

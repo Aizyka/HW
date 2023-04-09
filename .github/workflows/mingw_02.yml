@@ -51,5 +51,5 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
-          path: ./02/windows_mingw.7z
+          path: ./02/build/windows_mingw.7z
           name: windows_mingw.7z

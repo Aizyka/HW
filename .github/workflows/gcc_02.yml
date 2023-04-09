@@ -75,5 +75,5 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
-          path: ./02/${{ matrix.config.artifact }}
+          path: ./02/build/${{ matrix.config.artifact }}
           name: ${{ matrix.config.artifact }}
