@@ -147,37 +147,47 @@ int Engine::init()
 void Engine::reload_game(const char* library_name, void*& old_handle)
 {
     system("clear");
-
-    if (old_handle != NULL)
+    if (game)
     {
-        std::cout << "\nreloading game" << std::endl;
         SDL_UnloadObject(old_handle);
     }
 
-    old_handle = SDL_LoadObject(library_name);
+    void* game_handle = SDL_LoadObject(library_name);
 
-    if (old_handle == nullptr)
+    if (game_handle == nullptr)
     {
-        std::cerr << "error: failed to load game library, SDL Error: "
+        std::cerr << "error: failed to load: [" << library_name << "] "
                   << SDL_GetError() << std::endl;
         return;
     }
 
+    old_handle = game_handle;
+
     SDL_FunctionPointer create_game_func_ptr =
-        SDL_LoadFunction(old_handle, "create_game");
+        SDL_LoadFunction(game_handle, "create_game");
+
+    if (create_game_func_ptr == nullptr)
+    {
+        std::cerr << "error: no function [create_game] in " << library_name
+                  << " " << SDL_GetError() << std::endl;
+        return;
+    }
+    // void* destroy_game_func_ptr = SDL_LoadFunction(game_handle,
+    // "destroy_game");
 
     using create_game_ptr = decltype(&create_game);
 
     auto create_game_func =
         reinterpret_cast<create_game_ptr>(create_game_func_ptr);
 
-    BaseGame* game = create_game_func();
+    BaseGame* gameptr = create_game_func();
 
-    if (game == nullptr)
+    if (gameptr == nullptr)
     {
-        std::cerr << "error: cant instantiate game dll" << std::endl;
+        std::cerr << "error: func [create_game] returned: nullptr" << std::endl;
         return;
     }
-    else
+    game = gameptr;
+    if (game)
         game->load();
 }
