@@ -34,8 +34,12 @@ public:
 
     void update() override
     {
-        cout << "\r"
-             << "[[";
+#if __APPLE__
+        cout << "\r";
+#else
+        cout << "\b";
+#endif
+        cout << "[[";
         for (int i = 0; i < area_width; i++)
         {
             bool founded = false;

@@ -43,9 +43,7 @@ class Engine
 private:
     static void setup_key(SDL_Keycode key, KeyType type);
     static int  get_key(SDL_Keycode key);
-    static void reload_game(const char* library_name,
-                            const char* tmp_library_name,
-                            void*&      old_handle);
+    static void reload_game(const char* library_name, void*& old_handle);
 
 public:
     static bool key_pressed(KeyType key);

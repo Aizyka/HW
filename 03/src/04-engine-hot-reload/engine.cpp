@@ -54,7 +54,7 @@ int Engine::init()
 {
     void*       game_handle = NULL;
     const char* filepath    = "lib/libproj-04.dylib";
-    Engine::reload_game(filepath, "lib/tmp.dylib", game_handle);
+    Engine::reload_game(filepath, game_handle);
     auto last_write = std::filesystem::last_write_time(filepath);
 
     Engine::setup_key(SDLK_w, KeyType::UP);
@@ -98,7 +98,6 @@ int Engine::init()
         if (current_write_time != last_write)
         {
             std::filesystem::file_time_type next_write_time;
-            // wait while library file finish to changing
             for (;;)
             {
                 using namespace std::chrono;
@@ -113,14 +112,7 @@ int Engine::init()
                     break;
                 }
             }
-            Engine::reload_game(filepath, "lib/tmp.dylib", game_handle);
-
-            if (game == nullptr)
-            {
-                std::cerr << "next attempt to reload game..." << std::endl;
-                continue;
-            }
-
+            Engine::reload_game(filepath, game_handle);
             last_write = next_write_time;
         }
         SDL_Event event;
@@ -152,9 +144,7 @@ int Engine::init()
     return std::cout.good() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
-void Engine::reload_game(const char* library_name,
-                         const char* tmp_library_name,
-                         void*&      old_handle)
+void Engine::reload_game(const char* library_name, void*& old_handle)
 {
     system("clear");
 
@@ -168,7 +158,7 @@ void Engine::reload_game(const char* library_name,
 
     if (game_handle == nullptr)
     {
-        std::cerr << "error: failed to load: [" << tmp_library_name << "] "
+        std::cerr << "error: failed to load game library, SDL Error: "
                   << SDL_GetError() << std::endl;
         return;
     }
@@ -177,13 +167,6 @@ void Engine::reload_game(const char* library_name,
 
     SDL_FunctionPointer create_game_func_ptr =
         SDL_LoadFunction(game_handle, "create_game");
-
-    if (create_game_func_ptr == nullptr)
-    {
-        std::cerr << "error: no function [create_game] in " << tmp_library_name
-                  << " " << SDL_GetError() << std::endl;
-        return;
-    }
 
     using create_game_ptr = decltype(&create_game);
 
@@ -194,7 +177,7 @@ void Engine::reload_game(const char* library_name,
 
     if (gameLoaded == nullptr)
     {
-        std::cerr << "error: func [create_game] returned: nullptr" << std::endl;
+        std::cerr << "error: cant instantiate game dll" << std::endl;
         return;
     }
     game = gameLoaded;
