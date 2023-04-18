@@ -81,7 +81,7 @@ public:
     }
 };
 
-OM_DECLSPEC BaseGame* create_game()
+DYNDLL BaseGame* create_game()
 {
     return new MyGame();
 }

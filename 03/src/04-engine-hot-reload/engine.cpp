@@ -148,40 +148,36 @@ void Engine::reload_game(const char* library_name, void*& old_handle)
 {
     system("clear");
 
-    if (game != NULL)
+    if (old_handle != NULL)
     {
         std::cout << "\nreloading game" << std::endl;
         SDL_UnloadObject(old_handle);
     }
 
-    void* game_handle = SDL_LoadObject(library_name);
+    old_handle = SDL_LoadObject(library_name);
 
-    if (game_handle == nullptr)
+    if (old_handle == nullptr)
     {
         std::cerr << "error: failed to load game library, SDL Error: "
                   << SDL_GetError() << std::endl;
         return;
     }
 
-    old_handle = game_handle;
-
     SDL_FunctionPointer create_game_func_ptr =
-        SDL_LoadFunction(game_handle, "create_game");
+        SDL_LoadFunction(old_handle, "create_game");
 
     using create_game_ptr = decltype(&create_game);
 
     auto create_game_func =
         reinterpret_cast<create_game_ptr>(create_game_func_ptr);
 
-    BaseGame* gameLoaded = create_game_func();
+    BaseGame* game = create_game_func();
 
-    if (gameLoaded == nullptr)
+    if (game == nullptr)
     {
         std::cerr << "error: cant instantiate game dll" << std::endl;
         return;
     }
-    game = gameLoaded;
-
-    if (game != NULL)
+    else
         game->load();
 }

@@ -1,8 +1,8 @@
 #include "SDL3/SDL.h"
 #include <vector>
 
-#ifndef OM_DECLSPEC
-#define OM_DECLSPEC
+#ifndef DYNDLL
+#define DYNDLL
 #endif
 
 enum class KeyType
@@ -51,4 +51,4 @@ public:
     static int  init();
 };
 
-extern "C" OM_DECLSPEC BaseGame* create_game();
+extern "C" DYNDLL BaseGame* create_game();
