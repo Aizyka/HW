@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.23)
+
+add_library(ppm SHARED)
+
+target_sources( ppm
+                PRIVATE
+                ${CMAKE_CURRENT_SOURCE_DIR}/ppm.cpp
+                )
+
+target_include_directories( ppm
+                            PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+                            )

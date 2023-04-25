@@ -1,0 +1,11 @@
+add_executable(square_fill square_fill.cpp)
+add_executable(lines lines.cpp)
+add_executable(triangle triangle.cpp)
+add_executable(triangle_indexed triangle_indexed.cpp)
+add_executable(triangle_interpolated triangle_interpolated.cpp)
+
+target_link_libraries(square_fill ppm renderer)
+target_link_libraries(lines ppm renderer)
+target_link_libraries(triangle ppm renderer)
+target_link_libraries(triangle_indexed ppm renderer)
+target_link_libraries(triangle_interpolated ppm renderer)
