@@ -9,3 +9,24 @@ target_link_libraries(lines ppm renderer)
 target_link_libraries(triangle ppm renderer)
 target_link_libraries(triangle_indexed ppm renderer)
 target_link_libraries(triangle_interpolated ppm renderer)
+
+set_target_properties( square_fill
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+set_target_properties( lines
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+set_target_properties( triangle
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+set_target_properties( triangle_indexed
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+set_target_properties( triangle_interpolated
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)

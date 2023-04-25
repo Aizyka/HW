@@ -12,3 +12,8 @@ target_include_directories( renderer
                             )
 
 target_link_libraries(renderer ppm)
+
+set_target_properties( renderer
+    PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/libs"
+)

@@ -1,6 +1,11 @@
 name: Clang 01
 
-on: [ ]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [closed]
 
 
 jobs:
