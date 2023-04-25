@@ -19,35 +19,33 @@ jobs:
           ninja --version
           cmake --version
           # cmd "${{ matrix.config.environment_script }}"
-
       - name: Configure
         shell: bash
         run: |
-          cd 04
-          mkdir build
+          cd 01
           cmake \
             -S . \
-            -B build \
+            -B . \
             -DCMAKE_BUILD_TYPE=Release \
             -G "Visual Studio 17 2022"
       - name: Build
         shell: bash
-        working-directory: 04/build
         run: |
+          cd 01
           cmake --build . --config Release
       - name: Install Strip
         shell: bash
-        working-directory: 04/build
         run: |
+          cd 01
           cmake --install . --strip
       - name: Pack
         shell: bash
-        working-directory: 04/build/bin
+        working-directory: 01/bin
         run: |
           ls -laR
           7z a ../windows_msvc.7z .
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
-          path: ./04/build/windows_msvc.7z
+          path: ./01/windows_msvc.7z
           name: windows_msvc.7z
