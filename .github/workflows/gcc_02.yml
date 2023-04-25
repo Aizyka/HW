@@ -1,11 +1,11 @@
 name: GCC 02
 
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches: [main]
-#     types: [closed]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [closed]
     
 jobs:
   build_ubuntu_gcc:
