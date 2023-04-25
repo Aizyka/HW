@@ -1,11 +1,6 @@
 name: MSVC 03
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-    types: [closed]
+on: [ ]
 
 jobs:
   build:

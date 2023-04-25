@@ -1,6 +1,11 @@
-name: GCC 03
+name: GCC 04
 
-on: [ ]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [closed]
 
 jobs:
   build_ubuntu_gcc:
@@ -32,15 +37,10 @@ jobs:
           cmake --version
           gcc --version
 
-      - name: Init Submodule
-        run: |
-          git submodule init
-          git submodule update
-
       - name: Configure
         shell: bash
         run: |
-          cd 03
+          cd 04
           mkdir build
           cmake \
             -S . \
@@ -50,19 +50,19 @@ jobs:
 
       - name: Build
         shell: bash
-        working-directory: 03/build
+        working-directory: 04/build
         run: |
           cmake --build . --config ${{ matrix.config.build_type }}
 
       - name: Install Strip
         shell: bash
-        working-directory: 03/build
+        working-directory: 04/build
         run: |
           cmake --install . --strip
 
       - name: Pack
         shell: bash
-        working-directory: 03/build/bin
+        working-directory: 04/build/bin
         run: |
           ls -laR
           ${{ matrix.config.archiver }} ../${{ matrix.config.artifact }} .
@@ -70,5 +70,5 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v1
         with:
-          path: ./03/build/${{ matrix.config.artifact }}
+          path: ./04/build/${{ matrix.config.artifact }}
           name: ${{ matrix.config.artifact }}
