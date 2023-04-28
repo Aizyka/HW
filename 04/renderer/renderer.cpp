@@ -70,14 +70,14 @@ void draw_triangle(
 
 void draw_triangle_indexed(Image                img,
                            std::vector<Vector2> vertices,
-                           std::vector<uint8_t> indicies,
+                           std::vector<uint8_t> indices,
                            Color                color)
 {
-    for (int i = 0; i < indicies.size(); i += 3)
+    for (int i = 0; i < indices.size(); i += 3)
     {
-        Vector2 vec1 = vertices.at(indicies[i]);
-        Vector2 vec2 = vertices.at(indicies[i + 1]);
-        Vector2 vec3 = vertices.at(indicies[i + 2]);
+        Vector2 vec1 = vertices.at(indices[i]);
+        Vector2 vec2 = vertices.at(indices[i + 1]);
+        Vector2 vec3 = vertices.at(indices[i + 2]);
         draw_line(img, vec1, vec2, color);
         draw_line(img, vec2, vec3, color);
         draw_line(img, vec1, vec3, color);

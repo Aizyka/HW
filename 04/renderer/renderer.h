@@ -24,7 +24,7 @@ void draw_triangle(
     Image img, Vector2 vec1, Vector2 vec2, Vector2 vec3, Color color);
 void draw_triangle_indexed(Image                img,
                            std::vector<Vector2> vertices,
-                           std::vector<uint8_t> indicies,
+                           std::vector<uint8_t> indices,
                            Color                color);
 void draw_triangle_interpolated(Image   img,
                                 Vector2 p1,

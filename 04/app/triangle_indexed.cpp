@@ -1,9 +1,29 @@
 #include "ppm.h"
 #include "renderer.h"
+#include <cmath>
+#include <vector>
+
+std::vector<Vector2> generate_circle_vertices(int num_segments,
+                                              int radius,
+                                              int size)
+{
+    std::vector<Vector2> vertices;
+    for (int i = 0; i < num_segments; i++)
+    {
+        float angle = static_cast<float>(i) / static_cast<float>(num_segments) *
+                      2.0f * static_cast<float>(M_PI);
+        int y = static_cast<int>(std::cos(angle) * static_cast<float>(radius) +
+                                 size / 2);
+        int x = static_cast<int>(std::sin(angle) * static_cast<float>(radius) +
+                                 size / 2);
+        vertices.push_back(Vector2(x, y));
+    }
+    return vertices;
+}
 
 int main()
 {
-    const int size = 512;
+    const int size = 1024;
 
     Image img;
     img.width     = size;
@@ -12,47 +32,24 @@ int main()
     img.max_color = 255;
     img.pixels    = new Color[img.width * img.height];
 
-    std::vector<Vector2> vertices;
+    const int num_segments = 100;
+    const int radius       = 512;
 
-    int max_triangles = 10;
+    std::vector<Vector2> circle_vertices =
+        generate_circle_vertices(num_segments, radius, size);
 
-    int step_x = (img.width - 1) / max_triangles;
-    int step_y = (img.height - 1) / max_triangles;
-
-    for (int i = 0; i <= max_triangles; i++)
+    std::vector<uint8_t> indices;
+    for (int i = 0; i < num_segments - 2; i++)
     {
-        for (int j = 0; j <= max_triangles; j++)
-        {
-            Vector2 v(i * step_x, j * step_y);
-
-            vertices.push_back(v);
-        }
+        indices.push_back(0);
+        indices.push_back(i + 1);
+        indices.push_back(i + 2);
     }
+    indices.push_back(0);
+    indices.push_back(num_segments - 1);
+    indices.push_back(1);
 
-    std::vector<uint8_t> indicies;
-
-    for (int x = 0; x < max_triangles; ++x)
-    {
-        for (int y = 0; y < max_triangles; ++y)
-        {
-            uint8_t index0 = static_cast<uint8_t>(y * (max_triangles + 1) + x);
-            uint8_t index1 =
-                static_cast<uint8_t>(index0 + (max_triangles + 1) + 1);
-            uint8_t index2 = index1 - 1;
-            uint8_t index3 = index0 + 1;
-
-            indicies.push_back(index0);
-            indicies.push_back(index1);
-            indicies.push_back(index2);
-
-            indicies.push_back(index0);
-            indicies.push_back(index3);
-            indicies.push_back(index1);
-        }
-    }
-
-    draw_triangle_indexed(img, vertices, indicies, Color(255, 0, 0));
-
+    draw_triangle_indexed(img, circle_vertices, indices, Color(255, 0, 0));
     return save_ppm("triangle_indexed.ppm", img) == 0 ? EXIT_SUCCESS
                                                       : EXIT_FAILURE;
 }
