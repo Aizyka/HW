@@ -3,6 +3,7 @@
 #include "ppm.h"
 #include "renderer.h"
 #include <array>
+#include <cassert>
 #include <chrono>
 #include <cmath>
 #include <cstdint>
