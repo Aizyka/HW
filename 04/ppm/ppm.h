@@ -22,13 +22,21 @@ typedef struct Color
 } Color;
 #pragma pack(pop)
 
-typedef struct
+typedef struct Image
 {
     int         width;
     int         height;
     int         max_color;
     std::string format;
     Color*      pixels;
+
+    Image(int width, int height)
+        : width(width)
+        , height(height)
+    {
+        pixels = (Color*)calloc(width * height, sizeof(Color));
+    }
+    Image() {}
 } Image;
 
 int load_ppm(const char* filename, Image& img);
