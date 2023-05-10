@@ -1,0 +1,51 @@
+name: MSVC 05
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  build:
+    name: Windows MSVC
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          choco install ninja cmake
+          ninja --version
+          cmake --version
+          # cmd "${{ matrix.config.environment_script }}"
+      - name: Configure
+        shell: bash
+        run: |
+          cd 05
+          cmake \
+            -S . \
+            -B . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -G "Visual Studio 17 2022"
+      - name: Build
+        shell: bash
+        run: |
+          cd 05
+          cmake --build . --config Release
+      - name: Install Strip
+        shell: bash
+        run: |
+          cd 05
+          cmake --install . --strip
+      - name: Pack
+        shell: bash
+        working-directory: 05/bin
+        run: |
+          ls -laR
+          7z a ../windows_msvc.7z .
+      - name: Upload
+        uses: actions/upload-artifact@v1
+        with:
+          path: ./05/windows_msvc.7z
+          name: windows_msvc.7z
