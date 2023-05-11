@@ -42,7 +42,7 @@ void Shader::load()
     unsigned int vertexShader;
     if (vertShader == NULL || fragShader == NULL)
     {
-        printf("Invalid shader!\n");
+        std::cout << "ERROR::SHADER::PARSING_FAILED\n" << std::endl;
         return;
     }
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -92,7 +92,7 @@ void Shader::SetUniform(const char* id, int value)
     GLint pos = glGetUniformLocation(program, id);
     if (pos == -1)
     {
-        std::cout << "ERROR::SHADER::UNIFORM::NOTFOUND::" << id;
+        std::cout << "ERROR::SHADER::UNIFORM::NOTFOUND::" << id << std::endl;
         return;
     }
     glUniform1i(pos, value);
@@ -103,7 +103,7 @@ void Shader::SetUniform(const char* id, float value)
     GLint pos = glGetUniformLocation(program, id);
     if (pos == -1)
     {
-        std::cout << "ERROR::SHADER::UNIFORM::NOTFOUND::" << id;
+        std::cout << "ERROR::SHADER::UNIFORM::NOTFOUND::" << id << std::endl;
         return;
     }
     glUniform1f(pos, value);
@@ -114,7 +114,7 @@ void Shader::SetUniform(const char* id, Color value)
     GLint pos = glGetUniformLocation(program, id);
     if (pos == -1)
     {
-        std::cout << "ERROR::SHADER::UNIFORM::NOTFOUND::" << id;
+        std::cout << "ERROR::SHADER::UNIFORM::NOTFOUND::" << id << std::endl;
         return;
     }
     glUniform4f(pos, value.r, value.g, value.b, value.a);
@@ -125,7 +125,7 @@ void Shader::SetUniform(const char* id, Vector3 value)
     GLint pos = glGetUniformLocation(program, id);
     if (pos == -1)
     {
-        std::cout << "ERROR::SHADER::UNIFORM::NOTFOUND::" << id;
+        std::cout << "ERROR::SHADER::UNIFORM::NOTFOUND::" << id << std::endl;
         return;
     }
     glUniform3f(pos, value.x, value.y, value.z);

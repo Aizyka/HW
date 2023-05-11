@@ -7,6 +7,7 @@ class MyGame : Game
 {
     Renderer* renderer;
     float     time;
+    float     radius = 350.0f;
     void      init() override
     {
         renderer                       = new Renderer();
@@ -129,7 +130,7 @@ void main()
         renderer->shader->SetUniform("mouse_position",
                                      get_mouse_position() +
                                          Vector3(-400.0f, 400.0f, 0.0f));
-        renderer->shader->SetUniform("radius", 350.0f);
+        renderer->shader->SetUniform("radius", radius);
         renderer->shader->SetUniform("spiral_radius",
                                      (float)Math::cos(time * PI) / 40.0f);
         renderer->render();
