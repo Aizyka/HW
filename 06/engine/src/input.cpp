@@ -1,4 +1,5 @@
 #include "input.h"
+#include <algorithm>
 std::vector<KeyCode> Input::button;
 std::vector<KeyCode> Input::buttonUp;
 std::vector<KeyCode> Input::buttonDown;
