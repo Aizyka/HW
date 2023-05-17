@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include "input.h"
 #include <SDL3/SDL_opengl.h>
+#include <algorithm>
 #include <iostream>
 
 Vector3 Game::get_mouse_position()
